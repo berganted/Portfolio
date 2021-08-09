@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gallery">
+
+
+	
+	<select id="selectAll" resultType="port.gallery.GalleryVo" parameterType="port.gallery.GalleryVo">
+			SELECT * FROM gallery 
+			LIMIT ${strIdx},${pageRow}
+	</select>
+	<select id="count" resultType="int" parameterType="port.gallery.GalleryVo">
+			SELECT count(*) FROM gallery 
+	</select>
+	<select id="detail" resultType="port.gallery.GalleryVo" parameterType="port.gallery.GalleryVo">
+		SELECT * FROM gallery WHERE no = #{no}
+	</select>
+	<update id="updateReadCount" parameterType="port.gallery.GalleryVo">
+		UPDATE gallery SET readcnt=readcnt+1 WHERE no = #{no}
+	</update> 
+	<insert id="insert">
+		INSERT INTO gallery (title,content,name,readcnt,regdate,filename,filerename) 
+		VALUES(#{title},#{content},#{name},0,NOW(),#{filename},#{filerename})
+	</insert>
+	<delete id="delete" parameterType="port.gallery.GalleryVo">
+		DELETE FROM gallery WHERE no=#{no}
+	</delete>
+	<update id="update" parameterType="port.gallery.GalleryVo">
+		UPDATE gallery SET
+			title=#{title}, content=#{content}
+		WHERE no=#{no}
+	</update>
+</mapper>
+

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="port">
+
+	<select id="login"  resultType="port.admin.AdminVo" parameterType="port.admin.AdminVo">
+			SELECT *FROM admin WHERE id=#{id} AND pwd=#{pwd}
+	</select>
+	
+	<select id="selectAll" resultType="port.notice.BoardVo" parameterType="port.notice.BoardVo">
+			SELECT * FROM notice 
+			LIMIT ${strIdx},${pageRow}
+	</select>
+	<select id="count" resultType="int" parameterType="port.notice.BoardVo">
+			SELECT count(*) FROM notice 
+	</select>
+	<select id="detail" resultType="port.notice.BoardVo" parameterType="port.notice.BoardVo">
+		SELECT * FROM notice WHERE no = #{no}
+	</select>
+	<update id="updateReadCount" parameterType="port.notice.BoardVo">
+		UPDATE notice SET readcnt=readcnt+1 WHERE no = #{no}
+	</update> 
+	<insert id="insert">
+		INSERT INTO notice (title,content,name,readcnt,regdate) VALUES(#{title},#{content},#{name},0,NOW())
+	</insert>
+	<delete id="delete" parameterType="port.notice.BoardVo">
+		DELETE FROM notice WHERE no=#{no}
+	</delete>
+	<update id="update" parameterType="port.notice.BoardVo">
+		UPDATE notice SET
+			title=#{title}, content=#{content}
+		WHERE no=#{no}
+	</update>
+</mapper>
+
